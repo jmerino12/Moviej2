@@ -4,15 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import com.jmb.moviej2.R
 import com.jmb.moviej2.databinding.FragmentHomeBinding
 import com.jmb.moviej2.model.MovieDB
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
+import com.jmb.moviej2.ui.common.CoroutineScopeFragment
 import kotlinx.coroutines.launch
 
-class HomeFragment : Fragment() {
+class HomeFragment : CoroutineScopeFragment() {
 
     private val adapter = MoviesAdapter()
 
@@ -30,8 +28,7 @@ class HomeFragment : Fragment() {
     ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         binding.recycler.adapter = adapter
-
-        GlobalScope.launch(Dispatchers.Main) {
+        launch {
             val movies = MovieDB.service.listPopularMoviesAsync(getString(R.string.api_key))
             adapter.movies = movies.results
         }
