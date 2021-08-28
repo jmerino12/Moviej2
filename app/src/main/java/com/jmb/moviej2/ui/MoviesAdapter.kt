@@ -42,6 +42,7 @@ class MoviesAdapter : RecyclerView.Adapter<MoviesAdapter.ViewHolder>() {
         private val binding = ViewMovieBinding.bind(view)
         fun bind(movie: Movie) {
             binding.movieTitle.text = movie.title
+            binding.movieCover.loadUrl("https://image.tmdb.org/t/p/w185/${movie.posterPath}")
         }
     }
 }

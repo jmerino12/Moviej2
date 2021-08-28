@@ -21,6 +21,6 @@ abstract class CoroutineScopeFragment : Fragment(), CoroutineScope {
 
     override fun onDestroy() {
         super.onDestroy()
-        job.cancel() // Cancel job on activity destroy. After destroy all children jobs will be cancelled automatically
+        job.cancel() // Cancel job on fragment destroy. After destroy all children jobs will be cancelled automatically
     }
 }
