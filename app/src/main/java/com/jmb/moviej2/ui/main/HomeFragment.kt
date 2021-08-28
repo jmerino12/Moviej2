@@ -7,10 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.get
 import com.jmb.moviej2.databinding.FragmentHomeBinding
 import com.jmb.moviej2.model.MoviesRepository
+import com.jmb.moviej2.ui.common.getViewModel
 import com.jmb.moviej2.ui.common.navigateTo
 
 class HomeFragment : Fragment() {
@@ -26,10 +25,7 @@ class HomeFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        viewModel = ViewModelProvider(
-            this,
-            MainViewModelFactory(MoviesRepository(requireActivity()))
-        ).get()
+        viewModel = getViewModel { MainViewModel(MoviesRepository(requireActivity())) }
     }
 
     override fun onCreateView(

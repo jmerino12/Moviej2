@@ -8,11 +8,10 @@ import androidx.core.text.bold
 import androidx.core.text.buildSpannedString
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.get
 import androidx.navigation.fragment.navArgs
 import com.jmb.moviej2.databinding.FragmentMovieDetailBinding
 import com.jmb.moviej2.model.Movie
+import com.jmb.moviej2.ui.common.getViewModel
 import com.jmb.moviej2.ui.common.loadUrl
 
 
@@ -31,10 +30,7 @@ class MovieDetail : Fragment() {
         movie = args.movie
             ?: throw (IllegalStateException("Movie not found"))
 
-        viewModel = ViewModelProvider(
-            this,
-            DetailViewModelFactory(movie!!)
-        ).get()
+        viewModel = getViewModel { DetailViewModel(movie!!) }
     }
 
     override fun onCreateView(
