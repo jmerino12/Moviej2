@@ -7,26 +7,34 @@ import android.view.ViewGroup
 import androidx.core.text.bold
 import androidx.core.text.buildSpannedString
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.get
 import androidx.navigation.fragment.navArgs
 import com.jmb.moviej2.databinding.FragmentMovieDetailBinding
 import com.jmb.moviej2.model.Movie
 import com.jmb.moviej2.ui.common.loadUrl
 
 
-class MovieDetail : Fragment(), DetailPresenter.View {
+class MovieDetail : Fragment() {
 
     private val args: MovieDetailArgs by navArgs()
 
     private var _binding: FragmentMovieDetailBinding? = null
     private val binding get() = _binding!!
 
-    private val presenter = DetailPresenter()
     private var movie: Movie? = null
+    private lateinit var viewModel: DetailViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         movie = args.movie
             ?: throw (IllegalStateException("Movie not found"))
+
+        viewModel = ViewModelProvider(
+            this,
+            DetailViewModelFactory(movie!!)
+        ).get()
     }
 
     override fun onCreateView(
@@ -34,17 +42,15 @@ class MovieDetail : Fragment(), DetailPresenter.View {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentMovieDetailBinding.inflate(inflater, container, false)
-        presenter.onCreate(this@MovieDetail, movie!!)
+        viewModel.model.observe(viewLifecycleOwner, Observer(::updateUi))
         return binding.root
     }
 
-
-    override fun updateUI(movie: Movie) = with(binding) {
+    private fun updateUi(model: DetailViewModel.UiModel) = with(binding) {
+        val movie = model.movie
         movieDetailToolbar.title = movie.title
-        val background = movie.backdropPath ?: movie.posterPath
-        movieDetailImage.loadUrl("https://image.tmdb.org/t/p/w780$background")
+        movieDetailImage.loadUrl("https://image.tmdb.org/t/p/w780${movie.backdropPath}")
         movieDetailSummary.text = movie.overview
-
         movieDetailInfo.text = buildSpannedString {
             bold { append("Original language: ") }
             appendLine(movie.originalLanguage)
@@ -66,6 +72,5 @@ class MovieDetail : Fragment(), DetailPresenter.View {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-        presenter.onDestroy()
     }
 }
