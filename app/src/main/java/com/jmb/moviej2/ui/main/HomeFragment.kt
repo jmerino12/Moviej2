@@ -26,11 +26,16 @@ class HomeFragment : CoroutineScopeFragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
-        binding.recycler.adapter = adapter
-        launch {
-            adapter.movies = moviesRepository.findPopularMovies().results
+        with(binding) {
+            recycler.adapter = adapter
+            progress.visibility = View.VISIBLE
+            launch {
+                adapter.movies = moviesRepository.findPopularMovies().results
+                progress.visibility = View.GONE
+            }
+            return binding.root
         }
-        return binding.root
+
     }
 
     override fun onDestroy() {
