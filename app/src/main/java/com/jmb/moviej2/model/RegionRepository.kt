@@ -1,20 +1,16 @@
 package com.jmb.moviej2.model
 
 import android.Manifest.permission.ACCESS_COARSE_LOCATION
-import android.annotation.SuppressLint
 import android.app.Activity
 import android.location.Geocoder
 import android.location.Location
-import com.google.android.gms.location.LocationServices
-import kotlinx.coroutines.suspendCancellableCoroutine
-import kotlin.coroutines.resume
 
 class RegionRepository(activity: Activity) {
     companion object {
         private const val DEFAULT_REGION = "US"
     }
 
-    private val fusedLocationClient = LocationServices.getFusedLocationProviderClient(activity)
+    private val locationDataSource = PlayServicesLocationDataSource(activity)
     private val coarsePermissionChecker = PermissionChecker(activity, ACCESS_COARSE_LOCATION)
     private val geocoder = Geocoder(activity)
 
@@ -22,17 +18,9 @@ class RegionRepository(activity: Activity) {
 
     private suspend fun findLastLocation(): Location? {
         val success = coarsePermissionChecker.request()
-        return if (success) lastLocationSuspended() else null
+        return if (success) locationDataSource.findLastLocation() else null
     }
 
-    @SuppressLint("MissingPermission")
-    private suspend fun lastLocationSuspended(): Location? =
-        suspendCancellableCoroutine { continuation ->
-            fusedLocationClient.lastLocation
-                .addOnCompleteListener {
-                    continuation.resume(it.result)
-                }
-        }
 
     private fun Location?.toRegion(): String {
         val addresses = this?.let {
