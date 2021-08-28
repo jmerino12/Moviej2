@@ -1,4 +1,4 @@
-package com.jmb.moviej2
+package com.jmb.moviej2.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

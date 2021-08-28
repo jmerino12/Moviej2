@@ -1,10 +1,12 @@
-package com.jmb.moviej2
+package com.jmb.moviej2.ui
 
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.jmb.moviej2.R
 import com.jmb.moviej2.databinding.ViewMovieBinding
+import com.jmb.moviej2.model.Movie
 import kotlin.properties.Delegates
 
 class MoviesAdapter : RecyclerView.Adapter<MoviesAdapter.ViewHolder>() {

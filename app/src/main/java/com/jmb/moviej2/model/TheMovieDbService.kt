@@ -1,4 +1,4 @@
-package com.jmb.moviej2
+package com.jmb.moviej2.model
 
 import retrofit2.http.GET
 import retrofit2.http.Query

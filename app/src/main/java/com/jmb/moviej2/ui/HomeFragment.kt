@@ -1,11 +1,13 @@
-package com.jmb.moviej2
+package com.jmb.moviej2.ui
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.jmb.moviej2.R
 import com.jmb.moviej2.databinding.FragmentHomeBinding
+import com.jmb.moviej2.model.MovieDB
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch

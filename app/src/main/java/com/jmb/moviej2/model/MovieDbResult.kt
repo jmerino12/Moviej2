@@ -1,4 +1,4 @@
-package com.jmb.moviej2
+package com.jmb.moviej2.model
 
 import com.google.gson.annotations.SerializedName
 
