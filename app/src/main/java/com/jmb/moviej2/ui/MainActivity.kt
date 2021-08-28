@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.jmb.moviej2.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
-
     private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
