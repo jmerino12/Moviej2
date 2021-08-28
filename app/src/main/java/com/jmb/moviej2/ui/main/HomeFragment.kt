@@ -1,6 +1,7 @@
 package com.jmb.moviej2.ui.main
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -55,6 +56,7 @@ class HomeFragment : Fragment() {
                     model.movie
                 )
             )
+            is MainViewModel.UiModel.Error -> Log.e(tag, model.error.toString())
         }
     }
 

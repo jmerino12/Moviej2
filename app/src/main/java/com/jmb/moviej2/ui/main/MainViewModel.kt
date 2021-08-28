@@ -23,6 +23,7 @@ class MainViewModel(private val moviesRepository: MoviesRepository) : ViewModel(
         object Loading : UiModel()
         class Content(val movies: List<Movie>) : UiModel()
         class Navigation(val movie: Movie) : UiModel()
+        class Error(val error: Exception) : UiModel()
     }
 
     init {
@@ -32,8 +33,14 @@ class MainViewModel(private val moviesRepository: MoviesRepository) : ViewModel(
     private fun refresh() {
         launch {
             _model.value = UiModel.Loading
-            _model.value = UiModel.Content(moviesRepository.findPopularMovies().results)
+            try {
+                _model.value = UiModel.Content(moviesRepository.findPopularMovies().results)
+
+            } catch (e: Exception) {
+                _model.value = UiModel.Error(e)
+            }
         }
+
     }
 
     fun onMovieClicked(movie: Movie) {
