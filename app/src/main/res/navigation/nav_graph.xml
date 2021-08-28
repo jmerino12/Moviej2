@@ -9,5 +9,18 @@
         android:id="@+id/homeFragment"
         android:name="com.jmb.moviej2.ui.HomeFragment"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/action_home_to_movieDetail"
+            app:destination="@id/movieDetail" />
+    </fragment>
+    <fragment
+        android:id="@+id/movieDetail"
+        android:name="com.jmb.moviej2.ui.MovieDetail"
+        android:label="fragment_movie_detail"
+        tools:layout="@layout/fragment_movie_detail">
+        <argument
+            android:name="movie"
+            app:argType="com.jmb.moviej2.model.Movie" />
+    </fragment>
 </navigation>

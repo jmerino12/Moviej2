@@ -24,7 +24,9 @@ import kotlin.coroutines.resume
 
 class HomeFragment : CoroutineScopeFragment() {
 
-    private val adapter = MoviesAdapter()
+    private val adapter = MoviesAdapter {
+        navigateTo<HomeFragment>(HomeFragmentDirections.actionHomeToMovieDetail(it))
+    }
     private lateinit var fusedLocationClient: FusedLocationProviderClient
 
 
@@ -34,6 +36,10 @@ class HomeFragment : CoroutineScopeFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
+    }
+
+    override fun onResume() {
+        super.onResume()
     }
 
     override fun onCreateView(
