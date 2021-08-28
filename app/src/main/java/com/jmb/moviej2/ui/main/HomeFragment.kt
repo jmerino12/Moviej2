@@ -1,4 +1,4 @@
-package com.jmb.moviej2.ui
+package com.jmb.moviej2.ui.main
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import com.jmb.moviej2.databinding.FragmentHomeBinding
 import com.jmb.moviej2.model.MoviesRepository
 import com.jmb.moviej2.ui.common.CoroutineScopeFragment
+import com.jmb.moviej2.ui.common.navigateTo
 import kotlinx.coroutines.launch
 
 class HomeFragment : CoroutineScopeFragment() {

@@ -1,4 +1,4 @@
-package com.jmb.moviej2.ui
+package com.jmb.moviej2.ui.detail
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,6 +9,7 @@ import androidx.core.text.buildSpannedString
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
 import com.jmb.moviej2.databinding.FragmentMovieDetailBinding
+import com.jmb.moviej2.ui.common.loadUrl
 
 
 class MovieDetail : Fragment() {

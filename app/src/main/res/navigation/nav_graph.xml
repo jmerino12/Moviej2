@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.jmb.moviej2.ui.HomeFragment"
+        android:name="com.jmb.moviej2.ui.main.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home">
         <action
@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/movieDetail"
-        android:name="com.jmb.moviej2.ui.MovieDetail"
+        android:name="com.jmb.moviej2.ui.detail.MovieDetail"
         android:label="fragment_movie_detail"
         tools:layout="@layout/fragment_movie_detail">
         <argument

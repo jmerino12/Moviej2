@@ -1,4 +1,4 @@
-package com.jmb.moviej2.ui
+package com.jmb.moviej2.ui.common
 
 import android.view.LayoutInflater
 import android.view.View

@@ -1,4 +1,4 @@
-package com.jmb.moviej2.ui
+package com.jmb.moviej2.ui.main
 
 import android.view.View
 import android.view.ViewGroup
@@ -7,6 +7,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.jmb.moviej2.R
 import com.jmb.moviej2.databinding.ViewMovieBinding
 import com.jmb.moviej2.model.Movie
+import com.jmb.moviej2.ui.common.inflate
+import com.jmb.moviej2.ui.common.loadUrl
 import kotlin.properties.Delegates
 
 class MoviesAdapter(private val listener: (Movie) -> Unit) :
