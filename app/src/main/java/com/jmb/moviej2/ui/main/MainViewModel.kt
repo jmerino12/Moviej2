@@ -2,12 +2,12 @@ package com.jmb.moviej2.ui.main
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.jmb.moviej2.model.database.Movie
-import com.jmb.moviej2.model.server.MoviesRepository
+import com.jmb.domain.Movie
 import com.jmb.moviej2.ui.common.ScopedViewModel
+import com.jmb.usecases.GetPopularMovies
 import kotlinx.coroutines.launch
 
-class MainViewModel(private val moviesRepository: MoviesRepository) : ScopedViewModel() {
+class MainViewModel(private val getPopularMovies: GetPopularMovies) : ScopedViewModel() {
 
     private val _model = MutableLiveData<UiModel>()
     val model: LiveData<UiModel>
@@ -36,7 +36,7 @@ class MainViewModel(private val moviesRepository: MoviesRepository) : ScopedView
         launch {
             _model.value = UiModel.Loading
             try {
-                _model.value = UiModel.Content(moviesRepository.findPopularMovies())
+                _model.value = UiModel.Content(getPopularMovies.invoke())
             } catch (e: Exception) {
                 _model.value = UiModel.Error(e)
             }

@@ -8,12 +8,19 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import com.jmb.data.repository.MoviesRepository
+import com.jmb.data.repository.RegionRepository
 import com.jmb.moviej2.PermissionRequester
+import com.jmb.moviej2.R
 import com.jmb.moviej2.databinding.FragmentHomeBinding
-import com.jmb.moviej2.model.server.MoviesRepository
+import com.jmb.moviej2.model.AndroidPermissionChecker
+import com.jmb.moviej2.model.PlayServicesLocationDataSource
+import com.jmb.moviej2.model.database.RoomDataSource
+import com.jmb.moviej2.model.server.TheMovieDbDataSource
 import com.jmb.moviej2.ui.common.app
 import com.jmb.moviej2.ui.common.getViewModel
 import com.jmb.moviej2.ui.common.navigateTo
+import com.jmb.usecases.GetPopularMovies
 
 class HomeFragment : Fragment() {
 
@@ -30,8 +37,21 @@ class HomeFragment : Fragment() {
         super.onCreate(savedInstanceState)
         coarsePermissionRequester =
             PermissionRequester(this.requireActivity(), ACCESS_COARSE_LOCATION)
-        viewModel =
-            getViewModel { MainViewModel(MoviesRepository(application = requireActivity().app)) }
+        viewModel = getViewModel {
+            MainViewModel(
+                GetPopularMovies(
+                    MoviesRepository(
+                        RoomDataSource(requireActivity().app.db),
+                        TheMovieDbDataSource(),
+                        RegionRepository(
+                            PlayServicesLocationDataSource(requireActivity().app),
+                            AndroidPermissionChecker(requireActivity().app)
+                        ),
+                        requireActivity().app.getString(R.string.api_key)
+                    )
+                )
+            )
+        }
     }
 
     override fun onCreateView(

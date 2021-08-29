@@ -10,12 +10,19 @@ import androidx.core.text.buildSpannedString
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.navArgs
+import com.jmb.data.repository.MoviesRepository
+import com.jmb.data.repository.RegionRepository
 import com.jmb.moviej2.R
 import com.jmb.moviej2.databinding.FragmentMovieDetailBinding
-import com.jmb.moviej2.model.server.MoviesRepository
+import com.jmb.moviej2.model.AndroidPermissionChecker
+import com.jmb.moviej2.model.PlayServicesLocationDataSource
+import com.jmb.moviej2.model.database.RoomDataSource
+import com.jmb.moviej2.model.server.TheMovieDbDataSource
 import com.jmb.moviej2.ui.common.app
 import com.jmb.moviej2.ui.common.getViewModel
 import com.jmb.moviej2.ui.common.loadUrl
+import com.jmb.usecases.FindMovieById
+import com.jmb.usecases.ToggleMovieFavorite
 
 
 class MovieDetail : Fragment() {
@@ -32,9 +39,20 @@ class MovieDetail : Fragment() {
         super.onCreate(savedInstanceState)
         movie = if (args.movie == null) -1 else args.movie
         viewModel = getViewModel {
+            val moviesRepository = MoviesRepository(
+                RoomDataSource(requireActivity().app.db),
+                TheMovieDbDataSource(),
+                RegionRepository(
+                    PlayServicesLocationDataSource(requireActivity().app),
+                    AndroidPermissionChecker(requireActivity().app)
+                ),
+                requireActivity().app.getString(R.string.api_key)
+            )
+
             DetailViewModel(
                 movie!!,
-                MoviesRepository(application = requireActivity().app)
+                findMovieById = FindMovieById(moviesRepository),
+                toggleMovieFavorite = ToggleMovieFavorite(moviesRepository)
             )
         }
     }
