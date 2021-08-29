@@ -33,6 +33,10 @@ class MoviesRepository(application: MoviesApp) {
         db.movieDao().findById(id)
     }
 
+    suspend fun update(movie: DbMovie) = withContext(Dispatchers.IO) {
+        db.movieDao().updateMovie(movie)
+    }
+
 }
 
 private fun ServerMovie.convertToDbMovie() = DbMovie(
