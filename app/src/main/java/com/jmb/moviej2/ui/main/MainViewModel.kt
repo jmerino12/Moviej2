@@ -23,6 +23,7 @@ class MainViewModel(private val moviesRepository: MoviesRepository) : ViewModel(
         object Loading : UiModel()
         class Content(val movies: List<Movie>) : UiModel()
         class Navigation(val movie: Movie) : UiModel()
+        object RequestLocationPermission : UiModel()
         class Error(val error: Exception) : UiModel()
     }
 
@@ -31,16 +32,18 @@ class MainViewModel(private val moviesRepository: MoviesRepository) : ViewModel(
     }
 
     private fun refresh() {
+        _model.value = UiModel.RequestLocationPermission
+    }
+
+    fun onCoarsePermissionRequested() {
         launch {
             _model.value = UiModel.Loading
             try {
                 _model.value = UiModel.Content(moviesRepository.findPopularMovies().results)
-
             } catch (e: Exception) {
                 _model.value = UiModel.Error(e)
             }
         }
-
     }
 
     fun onMovieClicked(movie: Movie) {

@@ -1,11 +1,11 @@
 package com.jmb.moviej2.model
 
-import android.app.Activity
+import android.app.Application
 import com.jmb.moviej2.R
 
-class MoviesRepository(activity: Activity) {
-    private val apiKey = activity.getString(R.string.api_key)
-    private val regionRepository = RegionRepository(activity)
+class MoviesRepository(application: Application) {
+    private val apiKey = application.getString(R.string.api_key)
+    private val regionRepository = RegionRepository(application)
 
     suspend fun findPopularMovies() =
         MovieDB.service
