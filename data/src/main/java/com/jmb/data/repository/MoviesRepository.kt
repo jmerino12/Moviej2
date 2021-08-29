@@ -14,12 +14,14 @@ class MoviesRepository(
 
     suspend fun getPopularMovies(): List<Movie> {
 
-        if (localDataSource.isEmpty()) {
+        /*if (localDataSource.isEmpty()) {
             val movies =
                 remoteDataSource.getPopularMovies(apiKey, regionRepository.findLastRegion())
             localDataSource.saveMovies(movies)
         }
-
+        return localDataSource.getPopularMovies()*/
+        val movies = remoteDataSource.getPopularMovies(apiKey, regionRepository.findLastRegion())
+        localDataSource.saveMovies(movies)
         return localDataSource.getPopularMovies()
     }
 

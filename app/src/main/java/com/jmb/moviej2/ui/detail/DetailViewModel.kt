@@ -1,5 +1,6 @@
 package com.jmb.moviej2.ui.detail
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.jmb.domain.Movie
@@ -27,7 +28,11 @@ class DetailViewModel(
 
     private fun findMovie() {
         launch {
-            _model.value = UiModel(findMovieById.invoke(movieId))
+            try {
+                _model.value = UiModel(findMovieById.invoke(movieId))
+            } catch (e: Exception) {
+                Log.e("DetailViewmodel", e.message.toString())
+            }
         }
     }
 

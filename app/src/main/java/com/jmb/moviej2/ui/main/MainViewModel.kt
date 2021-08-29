@@ -47,6 +47,10 @@ class MainViewModel(private val getPopularMovies: GetPopularMovies) : ScopedView
         _model.value = UiModel.Navigation(movie)
     }
 
+    fun onNavigateDone() {
+        _model.value = null
+    }
+
     override fun onCleared() {
         destroyScope()
         super.onCleared()

@@ -79,6 +79,7 @@ class HomeFragment : Fragment() {
                     )
 
                 )
+                viewModel.onNavigateDone()
             }
             MainViewModel.UiModel.RequestLocationPermission -> coarsePermissionRequester.request {
                 viewModel.onCoarsePermissionRequested()
