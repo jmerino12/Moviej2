@@ -1,5 +1,6 @@
 package com.jmb.moviej2.ui.common
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,6 +15,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.jmb.moviej2.MoviesApp
 import kotlin.properties.Delegates
 
 fun ViewGroup.inflate(@LayoutRes layoutRes: Int, attachToRoot: Boolean = true): View =
@@ -55,4 +57,7 @@ inline fun <reified T : ViewModel> Fragment.getViewModel(crossinline factory: ()
 
     return ViewModelProvider(this, vmFactory).get()
 }
+
+val Context.app: MoviesApp
+    get() = applicationContext as MoviesApp
 
