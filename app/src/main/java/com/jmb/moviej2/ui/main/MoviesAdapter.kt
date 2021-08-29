@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.jmb.moviej2.R
 import com.jmb.moviej2.databinding.ViewMovieBinding
-import com.jmb.moviej2.model.server.Movie
+import com.jmb.moviej2.model.database.Movie
 import com.jmb.moviej2.ui.common.inflate
 import com.jmb.moviej2.ui.common.loadUrl
 import kotlin.properties.Delegates

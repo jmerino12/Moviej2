@@ -10,7 +10,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.navArgs
 import com.jmb.moviej2.databinding.FragmentMovieDetailBinding
-import com.jmb.moviej2.model.server.Movie
+import com.jmb.moviej2.model.server.MoviesRepository
+import com.jmb.moviej2.ui.common.app
 import com.jmb.moviej2.ui.common.getViewModel
 import com.jmb.moviej2.ui.common.loadUrl
 
@@ -22,15 +23,18 @@ class MovieDetail : Fragment() {
     private var _binding: FragmentMovieDetailBinding? = null
     private val binding get() = _binding!!
 
-    private var movie: Movie? = null
+    private var movie: Int? = null
     private lateinit var viewModel: DetailViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        movie = args.movie
-            ?: throw (IllegalStateException("Movie not found"))
-
-        viewModel = getViewModel { DetailViewModel(movie!!) }
+        movie = if (args.movie == null) -1 else args.movie
+        viewModel = getViewModel {
+            DetailViewModel(
+                movie!!,
+                MoviesRepository(application = requireActivity().app)
+            )
+        }
     }
 
     override fun onCreateView(

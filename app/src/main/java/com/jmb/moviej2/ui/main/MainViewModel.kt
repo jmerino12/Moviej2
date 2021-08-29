@@ -2,15 +2,12 @@ package com.jmb.moviej2.ui.main
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import com.jmb.moviej2.model.server.Movie
+import com.jmb.moviej2.model.database.Movie
 import com.jmb.moviej2.model.server.MoviesRepository
-import com.jmb.moviej2.ui.common.Scope
+import com.jmb.moviej2.ui.common.ScopedViewModel
 import kotlinx.coroutines.launch
 
-class MainViewModel(private val moviesRepository: MoviesRepository) : ViewModel(),
-    Scope by Scope.Impl() {
+class MainViewModel(private val moviesRepository: MoviesRepository) : ScopedViewModel() {
 
     private val _model = MutableLiveData<UiModel>()
     val model: LiveData<UiModel>
@@ -39,7 +36,7 @@ class MainViewModel(private val moviesRepository: MoviesRepository) : ViewModel(
         launch {
             _model.value = UiModel.Loading
             try {
-                _model.value = UiModel.Content(moviesRepository.findPopularMovies().results)
+                _model.value = UiModel.Content(moviesRepository.findPopularMovies())
             } catch (e: Exception) {
                 _model.value = UiModel.Error(e)
             }
@@ -54,11 +51,4 @@ class MainViewModel(private val moviesRepository: MoviesRepository) : ViewModel(
         destroyScope()
         super.onCleared()
     }
-}
-
-@Suppress("UNCHECKED_CAST")
-class MainViewModelFactory(private val moviesRepository: MoviesRepository) :
-    ViewModelProvider.Factory {
-    override fun <T : ViewModel?> create(modelClass: Class<T>): T =
-        MainViewModel(moviesRepository) as T
 }

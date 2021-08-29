@@ -22,7 +22,6 @@
 
         <argument
             android:name="movie"
-            app:argType="com.jmb.moviej2.model.server.Movie"
-            app:nullable="true" />
+            app:argType="integer" />
     </fragment>
 </navigation>
