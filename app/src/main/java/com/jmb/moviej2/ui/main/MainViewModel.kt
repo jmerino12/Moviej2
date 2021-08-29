@@ -4,8 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.jmb.moviej2.model.Movie
-import com.jmb.moviej2.model.MoviesRepository
+import com.jmb.moviej2.model.server.Movie
+import com.jmb.moviej2.model.server.MoviesRepository
 import com.jmb.moviej2.ui.common.Scope
 import kotlinx.coroutines.launch
 

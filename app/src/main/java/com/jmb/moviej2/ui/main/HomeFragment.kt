@@ -10,7 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.jmb.moviej2.PermissionRequester
 import com.jmb.moviej2.databinding.FragmentHomeBinding
-import com.jmb.moviej2.model.MoviesRepository
+import com.jmb.moviej2.model.server.MoviesRepository
 import com.jmb.moviej2.ui.common.getViewModel
 import com.jmb.moviej2.ui.common.navigateTo
 

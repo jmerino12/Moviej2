@@ -3,7 +3,7 @@ package com.jmb.moviej2.ui.detail
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.jmb.moviej2.model.Movie
+import com.jmb.moviej2.model.server.Movie
 
 
 class DetailViewModel(private val movie: Movie) : ViewModel() {

@@ -1,4 +1,4 @@
-package com.jmb.moviej2.model
+package com.jmb.moviej2.model.server
 
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor

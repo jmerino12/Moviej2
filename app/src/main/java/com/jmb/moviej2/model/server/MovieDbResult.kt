@@ -1,4 +1,4 @@
-package com.jmb.moviej2.model
+package com.jmb.moviej2.model.server
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName

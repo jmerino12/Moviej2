@@ -10,7 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.navArgs
 import com.jmb.moviej2.databinding.FragmentMovieDetailBinding
-import com.jmb.moviej2.model.Movie
+import com.jmb.moviej2.model.server.Movie
 import com.jmb.moviej2.ui.common.getViewModel
 import com.jmb.moviej2.ui.common.loadUrl
 

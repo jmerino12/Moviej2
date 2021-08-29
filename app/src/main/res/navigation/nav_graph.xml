@@ -22,7 +22,7 @@
 
         <argument
             android:name="movie"
-            app:argType="com.jmb.moviej2.model.Movie"
+            app:argType="com.jmb.moviej2.model.server.Movie"
             app:nullable="true" />
     </fragment>
 </navigation>
