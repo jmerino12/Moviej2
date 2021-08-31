@@ -6,18 +6,16 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.jmb.moviej2.PermissionRequester
 import com.jmb.moviej2.databinding.FragmentHomeBinding
-import com.jmb.moviej2.ui.common.app
-import com.jmb.moviej2.ui.common.getViewModel
 import com.jmb.moviej2.ui.common.navigateTo
+import org.koin.androidx.scope.ScopeFragment
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class HomeFragment : Fragment() {
+class HomeFragment : ScopeFragment() {
 
-    private lateinit var component: MainActivityComponent
-    private val viewModel: MainViewModel by lazy { getViewModel { component.mainViewModel } }
+
     private lateinit var adapter: MoviesAdapter
     private lateinit var coarsePermissionRequester: PermissionRequester
 
@@ -25,11 +23,12 @@ class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
 
+    private val viewModel: MainViewModel by viewModel()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         coarsePermissionRequester =
             PermissionRequester(this.requireActivity(), ACCESS_COARSE_LOCATION)
-        component = requireActivity().app.component.plus(MainActivityModule())
     }
 
     override fun onCreateView(
@@ -37,10 +36,14 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         adapter = MoviesAdapter(viewModel::onMovieClicked)
         binding.recycler.adapter = adapter
         viewModel.model.observe(viewLifecycleOwner, Observer(::updateUi))
-        return binding.root
     }
 
     private fun updateUi(model: MainViewModel.UiModel) {
@@ -52,7 +55,7 @@ class HomeFragment : Fragment() {
             is MainViewModel.UiModel.Navigation -> {
                 navigateTo<HomeFragment>(
                     HomeFragmentDirections.actionHomeToMovieDetail(
-                        model.movie.id!!
+                        model.movie.id
                     )
 
                 )

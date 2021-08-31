@@ -7,17 +7,17 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.core.text.bold
 import androidx.core.text.buildSpannedString
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.navArgs
 import com.jmb.moviej2.R
 import com.jmb.moviej2.databinding.FragmentMovieDetailBinding
-import com.jmb.moviej2.ui.common.app
-import com.jmb.moviej2.ui.common.getViewModel
 import com.jmb.moviej2.ui.common.loadUrl
+import org.koin.androidx.scope.ScopeFragment
+import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.parameter.parametersOf
 
 
-class MovieDetail : Fragment() {
+class MovieDetail : ScopeFragment() {
 
     private val args: MovieDetailArgs by navArgs()
 
@@ -25,13 +25,14 @@ class MovieDetail : Fragment() {
     private val binding get() = _binding!!
 
     private var movie: Int? = null
-    private lateinit var component: DetailActivityComponent
-    private val viewModel by lazy { getViewModel { component.detaiViewModel } }
+    private val viewModel: DetailViewModel by viewModel {
+        parametersOf(args.movie)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         movie = if (args.movie == null) -1 else args.movie
-        component = requireActivity().app.component.plus(DetailActivityModule(movie!!))
+
     }
 
 
@@ -51,7 +52,7 @@ class MovieDetail : Fragment() {
         movieDetailImage.loadUrl("https://image.tmdb.org/t/p/w780${movie.backdropPath}")
         movieDetailSummary.text = movie.overview
         val icon =
-            if (movie.favorite == true) R.drawable.ic_favorite_on else R.drawable.ic_favorite_off
+            if (movie.favorite) R.drawable.ic_favorite_on else R.drawable.ic_favorite_off
         movieDetailFavorite.setImageDrawable(
             ContextCompat.getDrawable(
                 this@MovieDetail.requireContext(),
