@@ -10,19 +10,11 @@ import androidx.core.text.buildSpannedString
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.navArgs
-import com.jmb.data.repository.MoviesRepository
-import com.jmb.data.repository.RegionRepository
 import com.jmb.moviej2.R
 import com.jmb.moviej2.databinding.FragmentMovieDetailBinding
-import com.jmb.moviej2.model.AndroidPermissionChecker
-import com.jmb.moviej2.model.PlayServicesLocationDataSource
-import com.jmb.moviej2.model.database.RoomDataSource
-import com.jmb.moviej2.model.server.TheMovieDbDataSource
 import com.jmb.moviej2.ui.common.app
 import com.jmb.moviej2.ui.common.getViewModel
 import com.jmb.moviej2.ui.common.loadUrl
-import com.jmb.usecases.FindMovieById
-import com.jmb.usecases.ToggleMovieFavorite
 
 
 class MovieDetail : Fragment() {
@@ -33,29 +25,13 @@ class MovieDetail : Fragment() {
     private val binding get() = _binding!!
 
     private var movie: Int? = null
-    private lateinit var viewModel: DetailViewModel
+    private val viewModel by lazy { getViewModel { requireActivity().app.component.detaiViewModel } }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         movie = if (args.movie == null) -1 else args.movie
-        viewModel = getViewModel {
-            val moviesRepository = MoviesRepository(
-                RoomDataSource(requireActivity().app.db),
-                TheMovieDbDataSource(),
-                RegionRepository(
-                    PlayServicesLocationDataSource(requireActivity().app),
-                    AndroidPermissionChecker(requireActivity().app)
-                ),
-                requireActivity().app.getString(R.string.api_key)
-            )
-
-            DetailViewModel(
-                movie!!,
-                findMovieById = FindMovieById(moviesRepository),
-                toggleMovieFavorite = ToggleMovieFavorite(moviesRepository)
-            )
-        }
     }
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -72,7 +48,8 @@ class MovieDetail : Fragment() {
         movieDetailToolbar.title = movie.title
         movieDetailImage.loadUrl("https://image.tmdb.org/t/p/w780${movie.backdropPath}")
         movieDetailSummary.text = movie.overview
-        val icon = if (movie.favorite) R.drawable.ic_favorite_on else R.drawable.ic_favorite_off
+        val icon =
+            if (movie.favorite == true) R.drawable.ic_favorite_on else R.drawable.ic_favorite_off
         movieDetailFavorite.setImageDrawable(
             ContextCompat.getDrawable(
                 this@MovieDetail.requireContext(),
