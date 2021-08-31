@@ -25,11 +25,13 @@ class MovieDetail : Fragment() {
     private val binding get() = _binding!!
 
     private var movie: Int? = null
-    private val viewModel by lazy { getViewModel { requireActivity().app.component.detaiViewModel } }
+    private lateinit var component: DetailActivityComponent
+    private val viewModel by lazy { getViewModel { component.detaiViewModel } }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         movie = if (args.movie == null) -1 else args.movie
+        component = requireActivity().app.component.plus(DetailActivityModule(movie!!))
     }
 
 

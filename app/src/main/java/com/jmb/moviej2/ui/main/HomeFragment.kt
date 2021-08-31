@@ -16,8 +16,8 @@ import com.jmb.moviej2.ui.common.navigateTo
 
 class HomeFragment : Fragment() {
 
-
-    private val viewModel: MainViewModel by lazy { getViewModel { requireActivity().app.component.mainViewModel } }
+    private lateinit var component: MainActivityComponent
+    private val viewModel: MainViewModel by lazy { getViewModel { component.mainViewModel } }
     private lateinit var adapter: MoviesAdapter
     private lateinit var coarsePermissionRequester: PermissionRequester
 
@@ -29,6 +29,7 @@ class HomeFragment : Fragment() {
         super.onCreate(savedInstanceState)
         coarsePermissionRequester =
             PermissionRequester(this.requireActivity(), ACCESS_COARSE_LOCATION)
+        component = requireActivity().app.component.plus(MainActivityModule())
     }
 
     override fun onCreateView(
@@ -40,7 +41,6 @@ class HomeFragment : Fragment() {
         binding.recycler.adapter = adapter
         viewModel.model.observe(viewLifecycleOwner, Observer(::updateUi))
         return binding.root
-
     }
 
     private fun updateUi(model: MainViewModel.UiModel) {
