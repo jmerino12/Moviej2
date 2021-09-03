@@ -18,8 +18,8 @@ class MainViewModel(private val getPopularMovies: GetPopularMovies) : ScopedView
 
     sealed class UiModel {
         object Loading : UiModel()
-        class Content(val movies: List<Movie>) : UiModel()
-        class Navigation(val movie: Movie) : UiModel()
+        data class Content(val movies: List<Movie>) : UiModel()
+        data class Navigation(val movie: Movie) : UiModel()
         object RequestLocationPermission : UiModel()
         class Error(val error: Exception) : UiModel()
     }

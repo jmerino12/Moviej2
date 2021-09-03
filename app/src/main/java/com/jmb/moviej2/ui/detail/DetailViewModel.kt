@@ -17,7 +17,7 @@ class DetailViewModel(
 ) :
     ScopedViewModel() {
 
-    class UiModel(val movie: Movie)
+    data class UiModel(val movie: Movie)
 
     private val _model = MutableLiveData<UiModel>()
     val model: LiveData<UiModel>
@@ -37,15 +37,12 @@ class DetailViewModel(
     }
 
     fun onFavoriteClicked() = launch {
-        try {
-            _model.value?.movie?.let {
-                val updatedMovie = it.copy(favorite = !it.favorite)
-                _model.value = UiModel(updatedMovie)
-                toggleMovieFavorite.invoke(updatedMovie)
+        _model.value?.movie?.let {
+            try {
+                _model.value = UiModel(toggleMovieFavorite.invoke(it))
+            } catch (e: Exception) {
+                Log.e(e.toString(), e.toString())
             }
-        } catch (e: Exception) {
-            Log.e(e.toString(), e.toString())
         }
-
     }
 }

@@ -1,8 +1,8 @@
-package com.jmb.usecases
+package com.jmb.testshared
 
 import com.jmb.domain.Movie
 
-internal val mockedMovie = Movie(
+val mockedMovie = Movie(
     0,
     "Title",
     "Overview",

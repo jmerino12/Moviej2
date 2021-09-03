@@ -1,6 +1,7 @@
 package com.jmb.usecases
 
 import com.jmb.data.repository.MoviesRepository
+import com.jmb.testshared.mockedMovie
 import com.nhaarman.mockitokotlin2.verify
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertFalse
