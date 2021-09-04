@@ -52,6 +52,7 @@ buildscript {
                 mockitoCore: 'org.mockito:mockito-core:3.8.0',
                 mockitoAndroid :'org.mockito:mockito-android:3.8.0',
                 corutinasKotlin: "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.5.1",
+                koinTest : "io.insert-koin:koin-test:3.0.2",
                 testShared: project(':testshared')
 
         ]

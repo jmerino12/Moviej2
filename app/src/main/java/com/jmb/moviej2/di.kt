@@ -19,6 +19,8 @@ import com.jmb.moviej2.ui.main.MainViewModel
 import com.jmb.usecases.FindMovieById
 import com.jmb.usecases.GetPopularMovies
 import com.jmb.usecases.ToggleMovieFavorite
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 import org.koin.android.ext.koin.androidApplication
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
@@ -43,9 +45,10 @@ private val appModule = module {
     factory<RemoteDataSource> { TheMovieDbDataSource() }
     factory<LocationDataSource> { PlayServicesLocationDataSource(get()) }
     factory<PermissionChecker> { AndroidPermissionChecker(get()) }
+    single<CoroutineDispatcher> { Dispatchers.Main }
 }
 
-private val dataModule = module {
+val dataModule = module {
     factory { RegionRepository(get(), get()) }
     factory { MoviesRepository(get(), get(), get(), get(named("apiKey"))) }
 }
